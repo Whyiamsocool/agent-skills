@@ -10,6 +10,14 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
+# Import compliance checker functions
+from compliance_checker import (
+    parse_requirements,
+    analyze_compliance,
+    generate_gap_report,
+    generate_recommendations
+)
+
 
 def run_command(cmd, input_text=None):
     """Run shell command and return output"""
@@ -102,11 +110,11 @@ def query_notebook(notebook_id, question):
 
 
 def generate_report(document_path, document_content, notebooks, queries, output_options):
-    """Generate comprehensive alignment report"""
+    """Generate comprehensive alignment report with real compliance analysis"""
     report = []
 
     # Header
-    report.append("# Document Alignment Review Report")
+    report.append("# Document Compliance Review Report")
     report.append(f"\n**Document:** {document_path}")
     report.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     report.append(f"\n---\n")
@@ -128,32 +136,52 @@ def generate_report(document_path, document_content, notebooks, queries, output_
 
     report.append("\n---\n")
 
-    # Query Results
-    report.append("## Requirements Analysis")
+    # Analyze compliance for each notebook
+    all_requirements = []
+    combined_results = None
+
+    for query in queries:
+        # Parse requirements from this notebook
+        requirements = parse_requirements(query['answer'])
+        all_requirements.extend(requirements)
+
+        # Analyze compliance
+        results = analyze_compliance(requirements, document_content)
+
+        if combined_results is None:
+            combined_results = results
+        else:
+            # Merge results
+            combined_results['total'] += results['total']
+            combined_results['found'] += results['found']
+            combined_results['missing'] += results['missing']
+
+            for category, cat_data in results['by_category'].items():
+                if category not in combined_results['by_category']:
+                    combined_results['by_category'][category] = cat_data
+                else:
+                    combined_results['by_category'][category]['total'] += cat_data['total']
+                    combined_results['by_category'][category]['found'] += cat_data['found']
+                    combined_results['by_category'][category]['missing'] += cat_data['missing']
+                    combined_results['by_category'][category]['requirements'].extend(cat_data['requirements'])
+
+    # Query Results (detailed requirements)
+    report.append("## Detailed Requirements")
     for query in queries:
         report.append(f"\n### {query['notebook_name']}")
         report.append(f"\n**Query:** {query['question']}\n")
         report.append(f"**Response:**\n{query['answer']}\n")
         report.append("\n---\n")
 
-    # Sections based on output options
-    if 'gap' in output_options or 'all' in output_options:
-        report.append("## Gap Analysis")
-        report.append("\n*This section identifies regulatory requirements that may be missing or inadequately addressed in your document.*\n")
-        report.append("**Analysis:** Review the requirements above and compare against your document sections.\n")
+    # Generate real gap analysis and recommendations
+    if combined_results:
+        if 'gap' in output_options or 'all' in output_options:
+            gap_report = generate_gap_report(combined_results)
+            report.append(gap_report)
 
-    if 'alignment' in output_options or 'all' in output_options:
-        report.append("## Alignment Summary")
-        report.append("\n*This section summarizes how well your document aligns with the reference requirements.*\n")
-        report.append("**Assessment:** Based on the requirements extracted, verify each section of your document for coverage.\n")
-
-    if 'recommendations' in output_options or 'all' in output_options:
-        report.append("## Recommendations")
-        report.append("\n*Suggested improvements to enhance document compliance and alignment.*\n")
-        report.append("1. Review each requirement from the source notebooks\n")
-        report.append("2. Verify your document addresses each requirement\n")
-        report.append("3. Update missing or incomplete sections\n")
-        report.append("4. Consider enhanced due diligence for high-risk areas\n")
+        if 'recommendations' in output_options or 'all' in output_options:
+            recommendations = generate_recommendations(combined_results)
+            report.append(recommendations)
 
     return '\n'.join(report)
 
