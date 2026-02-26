@@ -6,6 +6,7 @@ Reviews documents against NotebookLM notebooks and generates comprehensive repor
 
 import sys
 import json
+import os
 import subprocess
 from pathlib import Path
 from datetime import datetime
@@ -82,7 +83,11 @@ def select_relevant_notebooks(document_content, threshold=5):
 
 def query_notebook(notebook_id, question):
     """Query a specific NotebookLM notebook"""
-    notebooklm_path = Path.home() / '.claude' / 'skills' / 'notebooklm'
+    notebooklm_env = os.environ.get('NOTEBOOKLM_SKILL_DIR')
+    if notebooklm_env:
+        notebooklm_path = Path(notebooklm_env).expanduser()
+    else:
+        notebooklm_path = Path.home() / '.codex' / 'skills' / 'notebooklm'
     ask_script = notebooklm_path / 'scripts' / 'run.py'
 
     cmd = f'cd "{notebooklm_path}" && python3 "{ask_script}" ask_question.py --question "{question}" --notebook-id "{notebook_id}"'

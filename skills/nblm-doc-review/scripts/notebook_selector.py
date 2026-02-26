@@ -6,6 +6,7 @@ Intelligently select relevant NotebookLM notebooks based on document content.
 import sys
 import json
 import re
+import os
 from pathlib import Path
 from collections import Counter
 
@@ -112,7 +113,7 @@ def main():
     keywords = extract_keywords(document_text)
 
     # Get library path
-    library_path = Path.home() / '.claude' / 'skills' / 'notebooklm' / 'data' / 'library.json'
+    library_path = resolve_notebooklm_library_path()
 
     if not library_path.exists():
         print(json.dumps({'error': 'NotebookLM library not found'}))
@@ -141,3 +142,19 @@ def main():
 
 if __name__ == '__main__':
     main()
+def resolve_notebooklm_library_path():
+    """Resolve notebook library path across agent runtimes."""
+    env_dir = Path(os.environ.get('NOTEBOOKLM_SKILL_DIR', '')).expanduser() if os.environ.get('NOTEBOOKLM_SKILL_DIR') else None
+    candidates = []
+
+    if env_dir:
+        candidates.append(env_dir / 'data' / 'library.json')
+
+    # Prefer Codex layout.
+    candidates.append(Path.home() / '.codex' / 'skills' / 'notebooklm' / 'data' / 'library.json')
+
+    for path in candidates:
+        if path.exists():
+            return path
+
+    return candidates[0]
