@@ -1,6 +1,6 @@
 # NotebookLM Document Review Skill
 
-Vendor-neutral agent skill to review documents against your NotebookLM notebooks, identify gaps, assess alignment, and generate recommendations.
+Agent skill to review documents against your NotebookLM notebooks, identify gaps, assess alignment, and generate recommendations.
 
 ## What It Does
 
