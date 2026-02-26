@@ -57,7 +57,6 @@ python3 scripts/review_document.py /path/to/document.docx --threshold 3
 ```text
 nblm-doc-review/
 ├── SKILL.md
-├── nblm-doc-review.skill
 ├── scripts/
 │   ├── review_document.py
 │   ├── extract_content.py

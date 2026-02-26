@@ -15,7 +15,6 @@ agent-skills/
 ├── README.md
 ├── nblm-doc-review/
 │   ├── SKILL.md
-│   ├── nblm-doc-review.skill
 │   ├── scripts/
 │   └── references/
 └── <future-skill>/
