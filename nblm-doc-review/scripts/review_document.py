@@ -87,7 +87,7 @@ def query_notebook(notebook_id, question):
     if notebooklm_env:
         notebooklm_path = Path(notebooklm_env).expanduser()
     else:
-        # Prefer sibling skill in a monorepo: skills/notebooklm
+        # Prefer sibling skill in a flat repo: notebooklm
         skills_dir = Path(__file__).resolve().parents[2]
         candidate = skills_dir / 'notebooklm'
         if candidate.exists():
@@ -95,7 +95,7 @@ def query_notebook(notebook_id, question):
         else:
             return None, (
                 "NotebookLM skill directory not found. Set NOTEBOOKLM_SKILL_DIR "
-                "or place NotebookLM at skills/notebooklm."
+                "or place NotebookLM at notebooklm."
             )
     ask_script = notebooklm_path / 'scripts' / 'run.py'
 

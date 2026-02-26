@@ -22,14 +22,13 @@ From this repository structure:
 
 ```bash
 agent-skills/
-  skills/
-    nblm-doc-review/
+  nblm-doc-review/
 ```
 
-Use the `skills/nblm-doc-review` folder directly in your runtime, or set:
+Use the `nblm-doc-review` folder directly in your runtime, or set:
 
 ```bash
-export NOTEBOOKLM_SKILL_DIR="/path/to/skills/notebooklm"
+export NOTEBOOKLM_SKILL_DIR="/path/to/notebooklm"
 ```
 
 Set `NOTEBOOKLM_SKILL_DIR` to your NotebookLM skill path.
@@ -37,7 +36,7 @@ Set `NOTEBOOKLM_SKILL_DIR` to your NotebookLM skill path.
 ## Usage
 
 ```bash
-cd skills/nblm-doc-review
+cd nblm-doc-review
 python3 scripts/review_document.py /path/to/document.docx
 ```
 
@@ -56,7 +55,7 @@ python3 scripts/review_document.py /path/to/document.docx --threshold 3
 ## Structure
 
 ```text
-skills/nblm-doc-review/
+nblm-doc-review/
 ├── SKILL.md
 ├── nblm-doc-review.skill
 ├── scripts/

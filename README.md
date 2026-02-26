@@ -1,6 +1,6 @@
 # agent-skills
 
-A repository of reusable, vendor-neutral agent skills.
+Repository for publishing reusable agent skills.
 
 ## Skills
 
@@ -13,26 +13,21 @@ A repository of reusable, vendor-neutral agent skills.
 ```text
 agent-skills/
 ├── README.md
-└── skills/
-    └── nblm-doc-review/
-        ├── SKILL.md
-        ├── nblm-doc-review.skill
-        ├── scripts/
-        └── references/
+├── nblm-doc-review/
+│   ├── SKILL.md
+│   ├── nblm-doc-review.skill
+│   ├── scripts/
+│   └── references/
+└── <future-skill>/
 ```
 
 ## Adding a New Skill
 
-1. Create `skills/<skill-name>/`
+1. Create `<skill-name>/`
 2. Add `SKILL.md` with trigger conditions, workflow, and output format
 3. Add optional `scripts/`, `references/`, and `assets/`
 4. Update the table in this README
 
-## Recommended Git Workflow
+## Git Workflow
 
-1. Create branch `feature/<short-change-name>`
-2. Commit your changes
-3. Open a pull request to `main`
-4. Merge after review/checks
-
-For tiny typo fixes, direct commits are acceptable.
+Direct commits to `main` are fine for this repository.

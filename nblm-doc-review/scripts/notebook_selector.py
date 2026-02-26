@@ -150,7 +150,7 @@ def resolve_notebooklm_library_path():
     if env_dir:
         candidates.append(env_dir / 'data' / 'library.json')
 
-    # Prefer sibling skill in a monorepo: skills/notebooklm/data/library.json
+    # Prefer sibling skill in a flat repo: notebooklm/data/library.json
     skills_dir = Path(__file__).resolve().parents[2]
     candidates.append(skills_dir / 'notebooklm' / 'data' / 'library.json')
     for path in candidates:
