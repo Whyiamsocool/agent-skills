@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vendor DDQ Research"
+  short_description: "Search and download vendor DDQ evidence, including SOC reports"
+  default_prompt: "Collect public due diligence evidence for a vendor, map it to DDQ requirements, and download SOC report artifacts."

@@ -7,6 +7,7 @@ Repository for publishing reusable agent skills.
 | Skill | Purpose | Status |
 |---|---|---|
 | `nblm-doc-review` | Review documents against NotebookLM notebooks and generate alignment reports | Active |
+| `vendor-ddq-research` | Search and download vendor due diligence evidence based on DDQ requirements, including SOC report collection | Active |
 
 ## Repository Layout
 
