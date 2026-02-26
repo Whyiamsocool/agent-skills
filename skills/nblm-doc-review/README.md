@@ -29,11 +29,10 @@ agent-skills/
 Use the `skills/nblm-doc-review` folder directly in your runtime, or set:
 
 ```bash
-export NOTEBOOKLM_SKILL_DIR="$HOME/.codex/skills/notebooklm"
+export NOTEBOOKLM_SKILL_DIR="/path/to/skills/notebooklm"
 ```
 
-If `NOTEBOOKLM_SKILL_DIR` is not set, scripts try:
-1. `$HOME/.codex/skills/notebooklm`
+Set `NOTEBOOKLM_SKILL_DIR` to your NotebookLM skill path.
 
 ## Usage
 

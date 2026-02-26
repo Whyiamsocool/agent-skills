@@ -30,7 +30,7 @@ agent-skills/
 
 ## Recommended Git Workflow
 
-1. Create branch `codex/<short-change-name>`
+1. Create branch `feature/<short-change-name>`
 2. Commit your changes
 3. Open a pull request to `main`
 4. Merge after review/checks

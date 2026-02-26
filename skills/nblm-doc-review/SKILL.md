@@ -16,7 +16,7 @@ Before using this skill, you must:
 2. ✅ Authenticate with Google (`notebooklm auth_manager.py setup`)
 3. ✅ Add at least one notebook to your library (`notebooklm notebook_manager.py add`)
 
-This skill queries your NotebookLM notebooks at `$HOME/.codex/skills/notebooklm/` and reads your notebook library at `$HOME/.codex/skills/notebooklm/data/library.json`.
+This skill queries your NotebookLM notebooks at `/path/to/skills/notebooklm/` and reads your notebook library at `/path/to/skills/notebooklm/data/library.json`.
 
 ## When to Use This Skill
 
@@ -111,7 +111,7 @@ After initial review, you may want to:
 
 Use the NotebookLM skill directly for follow-up queries:
 ```bash
-cd $HOME/.codex/skills/notebooklm
+cd /path/to/skills/notebooklm
 python3 scripts/run.py ask_question.py --question "Your follow-up question" --notebook-id <notebook-id>
 ```
 
@@ -255,22 +255,22 @@ python scripts/review_document.py "/path/to/Proposal.docx" --threshold 3
 
 **Setup NotebookLM First:**
 1. Install the NotebookLM skill (separate download)
-2. Authenticate: `cd $HOME/.codex/skills/notebooklm && python3 scripts/run.py auth_manager.py setup`
+2. Authenticate: `cd /path/to/skills/notebooklm && python3 scripts/run.py auth_manager.py setup`
 3. Add notebooks: `python3 scripts/run.py notebook_manager.py add --url <url> --name <name> --description <desc> --topics <topics>`
 
 **How It Works:**
-- This skill calls NotebookLM scripts at `$HOME/.codex/skills/notebooklm/scripts/`
-- Reads notebook library at `$HOME/.codex/skills/notebooklm/data/library.json`
+- This skill calls NotebookLM scripts at `/path/to/skills/notebooklm/scripts/`
+- Reads notebook library at `/path/to/skills/notebooklm/data/library.json`
 - Uses NotebookLM's browser automation to query your notebooks
 
 **Notebook Library Location:**
 ```
-$HOME/.codex/skills/notebooklm/data/library.json
+/path/to/skills/notebooklm/data/library.json
 ```
 
 **To manage notebooks:**
 ```bash
-cd $HOME/.codex/skills/notebooklm
+cd /path/to/skills/notebooklm
 
 # List notebooks
 python3 scripts/run.py notebook_manager.py list
@@ -288,7 +288,7 @@ python3 scripts/run.py notebook_manager.py search --query <keyword>
 **Problem:** "No relevant notebooks found"
 **Solution:**
 - Lower threshold: `--threshold 3`
-- Check NotebookLM library has notebooks: `cd $HOME/.codex/skills/notebooklm && python3 scripts/run.py notebook_manager.py list`
+- Check NotebookLM library has notebooks: `cd /path/to/skills/notebooklm && python3 scripts/run.py notebook_manager.py list`
 - Add relevant notebooks to library if missing
 
 ### Extraction Failed
@@ -302,7 +302,7 @@ python3 scripts/run.py notebook_manager.py search --query <keyword>
 ### Query Timeout
 **Problem:** NotebookLM query times out
 **Solution:**
-- Check NotebookLM authentication: `cd $HOME/.codex/skills/notebooklm && python3 scripts/run.py auth_manager.py status`
+- Check NotebookLM authentication: `cd /path/to/skills/notebooklm && python3 scripts/run.py auth_manager.py status`
 - Re-authenticate if needed: `python3 scripts/run.py auth_manager.py reauth`
 - Simplify question or reduce depth to `quick`
 

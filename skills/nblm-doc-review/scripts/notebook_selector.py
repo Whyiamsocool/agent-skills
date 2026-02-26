@@ -143,16 +143,16 @@ def main():
 if __name__ == '__main__':
     main()
 def resolve_notebooklm_library_path():
-    """Resolve notebook library path across agent runtimes."""
+    """Resolve notebook library path in a runtime-neutral way."""
     env_dir = Path(os.environ.get('NOTEBOOKLM_SKILL_DIR', '')).expanduser() if os.environ.get('NOTEBOOKLM_SKILL_DIR') else None
     candidates = []
 
     if env_dir:
         candidates.append(env_dir / 'data' / 'library.json')
 
-    # Prefer Codex layout.
-    candidates.append(Path.home() / '.codex' / 'skills' / 'notebooklm' / 'data' / 'library.json')
-
+    # Prefer sibling skill in a monorepo: skills/notebooklm/data/library.json
+    skills_dir = Path(__file__).resolve().parents[2]
+    candidates.append(skills_dir / 'notebooklm' / 'data' / 'library.json')
     for path in candidates:
         if path.exists():
             return path
